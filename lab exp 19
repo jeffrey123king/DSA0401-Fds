@@ -1,0 +1,23 @@
+import pandas as pd
+data = {
+    "Review": [
+        "Good product",
+        "Excellent product",
+        "Good quality",
+        "Excellent quality",
+        "Good product"
+    ]
+}
+df = pd.DataFrame(data)
+text = " ".join(df["Review"])
+text = text.lower()
+words = text.split()
+frequency = {}
+for word in words:
+    if word in frequency:
+        frequency[word] += 1
+    else:
+        frequency[word] = 1
+print("Frequency Distribution of Words:")
+for word, count in frequency.items():
+    print(word, ":", count)
