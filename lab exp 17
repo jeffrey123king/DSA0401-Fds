@@ -1,0 +1,14 @@
+import pandas as pd
+# Create a DataFrame
+data = {
+    "Customer": ["A", "B", "C", "D", "E", "F", "G", "H"],
+    "Age": [22, 25, 22, 30, 25, 28, 30, 22]
+}
+df = pd.DataFrame(data)
+# Display the DataFrame
+print("Customer Data:")
+print(df)
+# Find frequency distribution of ages
+frequency = df["Age"].value_counts().sort_index()
+print("\nFrequency Distribution of Ages:")
+print(frequency)
