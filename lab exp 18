@@ -1,0 +1,11 @@
+import pandas as pd
+data = {
+    "Post": ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8"],
+    "Likes": [100, 150, 100, 200, 150, 100, 250, 200]
+}
+df = pd.DataFrame(data)
+print("Social Media Post Data:")
+print(df)
+frequency = df["Likes"].value_counts().sort_index()
+print("\nFrequency Distribution of Likes:")
+print(frequency)
