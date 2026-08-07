@@ -1,0 +1,78 @@
+# Import required libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy import stats
+
+# -----------------------------
+# Create DataFrame
+# Replace these values with your actual data
+# -----------------------------
+data = {
+    'Age': [23, 25, 28, 30, 32, 35, 38, 40, 42, 45, 47, 50, 52, 55, 58, 60, 63, 65],
+    'Fat': [12.5, 14.2, 15.8, 18.1, 19.5, 20.3, 21.7, 22.5, 23.8, 24.6,
+            25.2, 26.7, 27.5, 28.9, 30.1, 31.4, 32.6, 34.0]
+}
+
+df = pd.DataFrame(data)
+
+# -----------------------------
+# Mean
+# -----------------------------
+print("Mean:")
+print(df.mean())
+
+# -----------------------------
+# Median
+# -----------------------------
+print("\nMedian:")
+print(df.median())
+
+# -----------------------------
+# Standard Deviation
+# -----------------------------
+print("\nStandard Deviation:")
+print(df.std())
+
+# -----------------------------
+# Boxplots
+# -----------------------------
+plt.figure(figsize=(10,4))
+
+plt.subplot(1,2,1)
+sns.boxplot(y=df['Age'])
+plt.title('Boxplot of Age')
+
+plt.subplot(1,2,2)
+sns.boxplot(y=df['Fat'])
+plt.title('Boxplot of % Body Fat')
+
+plt.tight_layout()
+plt.show()
+
+# -----------------------------
+# Scatter Plot
+# -----------------------------
+plt.figure(figsize=(6,5))
+plt.scatter(df['Age'], df['Fat'], color='blue')
+plt.title('Scatter Plot: Age vs % Body Fat')
+plt.xlabel('Age')
+plt.ylabel('% Body Fat')
+plt.grid(True)
+plt.show()
+
+# -----------------------------
+# Q-Q Plot for Age
+# -----------------------------
+plt.figure(figsize=(6,5))
+stats.probplot(df['Age'], dist="norm", plot=plt)
+plt.title("Q-Q Plot of Age")
+plt.show()
+
+# -----------------------------
+# Q-Q Plot for % Body Fat
+# -----------------------------
+plt.figure(figsize=(6,5))
+stats.probplot(df['Fat'], dist="norm", plot=plt)
+plt.title("Q-Q Plot of % Body Fat")
+plt.show()
