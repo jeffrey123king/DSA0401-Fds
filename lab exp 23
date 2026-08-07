@@ -1,0 +1,34 @@
+import pandas as pd
+from scipy.stats import ttest_ind
+
+# ------------------------------------
+# Replace these values with your actual data
+# ------------------------------------
+
+design_A = [12, 15, 18, 20, 17, 16, 19, 21, 18, 20,
+            17, 16, 19, 22, 18]
+
+design_B = [14, 16, 20, 22, 19, 18, 21, 23, 20, 22,
+            19, 18, 20, 24, 21]
+
+# Create DataFrame (optional)
+df = pd.DataFrame({
+    "Design_A": pd.Series(design_A),
+    "Design_B": pd.Series(design_B)
+})
+
+# Perform Independent t-test
+t_stat, p_value = ttest_ind(design_A, design_B)
+
+print("T-statistic:", round(t_stat, 4))
+print("P-value:", round(p_value, 4))
+
+# Decision
+alpha = 0.05
+
+if p_value < alpha:
+    print("\nResult: Reject the Null Hypothesis (H0)")
+    print("There is a statistically significant difference between Website Design A and Website Design B.")
+else:
+    print("\nResult: Fail to Reject the Null Hypothesis (H0)")
+    print("There is no statistically significant difference between Website Design A and Website Design B.")
