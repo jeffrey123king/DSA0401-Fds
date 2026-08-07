@@ -1,0 +1,56 @@
+import pandas as pd
+import numpy as np
+from scipy import stats
+
+# -----------------------------
+# Read CSV file
+# -----------------------------
+# Replace 'customer_reviews.csv' with your file path if needed
+df = pd.read_csv("customer_reviews.csv")
+
+# Assume the ratings are stored in a column named 'Rating'
+# If your column has a different name, replace 'Rating' accordingly.
+ratings = df['Rating']
+
+# -----------------------------
+# Calculate Statistics
+# -----------------------------
+n = len(ratings)
+mean_rating = ratings.mean()
+std_dev = ratings.std(ddof=1)
+
+# -----------------------------
+# 95% Confidence Interval
+# -----------------------------
+confidence = 0.95
+alpha = 1 - confidence
+
+# Standard Error
+sem = stats.sem(ratings)
+
+# t-value
+t_value = stats.t.ppf(1 - alpha/2, df=n-1)
+
+# Margin of Error
+margin_error = t_value * sem
+
+# Confidence Interval
+lower = mean_rating - margin_error
+upper = mean_rating + margin_error
+
+# -----------------------------
+# Display Results
+# -----------------------------
+print("----- Customer Review Analysis -----")
+print("Number of Reviews:", n)
+print("Average Rating:", round(mean_rating, 2))
+print("Standard Deviation:", round(std_dev, 2))
+print("95% Confidence Interval: ({:.2f}, {:.2f})".format(lower, upper))
+
+# Customer Satisfaction
+if mean_rating >= 4:
+    print("Customer Satisfaction: High")
+elif mean_rating >= 3:
+    print("Customer Satisfaction: Moderate")
+else:
+    print("Customer Satisfaction: Low")
