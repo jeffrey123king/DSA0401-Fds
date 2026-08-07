@@ -1,0 +1,59 @@
+import pandas as pd
+import numpy as np
+from scipy import stats
+
+# -----------------------------
+# Read CSV file
+# -----------------------------
+# CSV should contain one column of concentration values
+data = pd.read_csv("rare_elements.csv")
+
+# Get the first column as the concentration data
+concentration = data.iloc[:, 0]
+
+# -----------------------------
+# User Inputs
+# -----------------------------
+sample_size = int(input("Enter sample size: "))
+confidence_level = float(input("Enter confidence level (e.g., 0.95): "))
+precision = float(input("Enter desired precision (margin of error): "))
+
+# -----------------------------
+# Draw Random Sample
+# -----------------------------
+sample = concentration.sample(n=sample_size, random_state=42)
+
+# -----------------------------
+# Point Estimation
+# -----------------------------
+sample_mean = np.mean(sample)
+sample_std = np.std(sample, ddof=1)
+
+# -----------------------------
+# Confidence Interval
+# -----------------------------
+alpha = 1 - confidence_level
+t_value = stats.t.ppf(1 - alpha / 2, df=sample_size - 1)
+
+margin_of_error = t_value * (sample_std / np.sqrt(sample_size))
+
+lower_limit = sample_mean - margin_of_error
+upper_limit = sample_mean + margin_of_error
+
+# -----------------------------
+# Display Results
+# -----------------------------
+print("\n----- Results -----")
+print("Sample Size:", sample_size)
+print("Sample Mean (Point Estimate):", round(sample_mean, 4))
+print("Sample Standard Deviation:", round(sample_std, 4))
+print("Confidence Level:", confidence_level)
+print("Desired Precision:", precision)
+print("Margin of Error:", round(margin_of_error, 4))
+print("95% Confidence Interval: ({:.4f}, {:.4f})".format(lower_limit, upper_limit))
+
+# Check whether desired precision is achieved
+if margin_of_error <= precision:
+    print("Desired precision achieved.")
+else:
+    print("Desired precision NOT achieved. Increase the sample size.")
