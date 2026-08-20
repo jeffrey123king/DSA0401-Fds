@@ -1,47 +1,22 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy.stats import ttest_ind
 
-n1 = int(input("Enter number of patients in control group: "))
+n = int(input("Enter number of values: "))
 
 control = []
-print("\nEnter control group values:")
-for i in range(n1):
-    value = float(input(f"Control patient {i + 1}: "))
-    control.append(value)
-
-n2 = int(input("\nEnter number of patients in treatment group: "))
-
 treatment = []
-print("\nEnter treatment group values:")
-for i in range(n2):
-    value = float(input(f"Treatment patient {i + 1}: "))
-    treatment.append(value)
 
-control = np.array(control)
-treatment = np.array(treatment)
+for i in range(n):
+    control.append(float(input("Control value: ")))
+    treatment.append(float(input("Treatment value: ")))
 
-control_mean = np.mean(control)
-treatment_mean = np.mean(treatment)
+t, p = ttest_ind(control, treatment)
 
-t_stat, p_value = ttest_ind(control, treatment)
+print("\nControl Mean:", np.mean(control))
+print("Treatment Mean:", np.mean(treatment))
+print("P-value:", round(p, 4))
 
-print("\n----- HYPOTHESIS TESTING RESULT -----")
-print("Control Group Mean   :", round(control_mean, 2))
-print("Treatment Group Mean :", round(treatment_mean, 2))
-print("T-statistic          :", round(t_stat, 4))
-print("P-value              :", round(p_value, 6))
-
-if p_value < 0.05:
-    print("Conclusion: Reject the Null Hypothesis")
-    print("The treatment has a statistically significant effect.")
+if p < 0.05:
+    print("Significant difference")
 else:
-    print("Conclusion: Fail to Reject the Null Hypothesis")
-    print("The treatment does not have a statistically significant effect.")
-
-plt.boxplot([control, treatment],
-            labels=["Control", "Treatment"])
-
-plt.ylabel("Patient Response")
-plt.title("Control Group vs Treatment Group")
-plt.show()
+    print("No significant difference")
