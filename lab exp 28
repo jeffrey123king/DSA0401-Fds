@@ -1,41 +1,29 @@
-import pandas as pd
-from sklearn.tree import DecisionTreeRegressor, export_text
+from sklearn.tree import DecisionTreeRegressor
 
 n = int(input("Enter number of cars: "))
-
-data = []
+X = []
+y = []
 
 for i in range(n):
     print("\nCar", i + 1)
     mileage = float(input("Mileage: "))
     age = float(input("Age: "))
     brand = float(input("Brand: "))
-    engine = float(input("Engine type: "))
+    engine = float(input("Engine: "))
     price = float(input("Price: "))
 
-    data.append([mileage, age, brand, engine, price])
+    X.append([mileage, age, brand, engine])
+    y.append(price)
 
-df = pd.DataFrame(data,
-                  columns=["Mileage", "Age", "Brand", "Engine", "Price"])
-
-X = df[["Mileage", "Age", "Brand", "Engine"]]
-y = df["Price"]
-
-model = DecisionTreeRegressor(max_depth=3, random_state=42)
+model = DecisionTreeRegressor(max_depth=3)
 model.fit(X, y)
 
 print("\nEnter new car details")
 mileage = float(input("Mileage: "))
 age = float(input("Age: "))
 brand = float(input("Brand: "))
-engine = float(input("Engine type: "))
+engine = float(input("Engine: "))
 
-new_car = [[mileage, age, brand, engine]]
+price = model.predict([[mileage, age, brand, engine]])
 
-prediction = model.predict(new_car)
-
-print("\nPredicted Price:", round(prediction[0], 2))
-
-print("\nDecision Path:")
-print(export_text(model,
-      feature_names=["Mileage", "Age", "Brand", "Engine"]))
+print("\nPredicted Price:", round(price[0], 2))
