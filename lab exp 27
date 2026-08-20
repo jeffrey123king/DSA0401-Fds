@@ -1,0 +1,64 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+n = int(input("Enter number of players: "))
+
+names = []
+ages = []
+positions = []
+goals = []
+salaries = []
+
+for i in range(n):
+    print("\nEnter details for Player", i + 1)
+
+    name = input("Name: ")
+    age = int(input("Age: "))
+    position = input("Position: ")
+    goal = int(input("Goals scored: "))
+    salary = float(input("Weekly salary: "))
+
+    names.append(name)
+    ages.append(age)
+    positions.append(position)
+    goals.append(goal)
+    salaries.append(salary)
+df = pd.DataFrame({
+    "Name": names,
+    "Age": ages,
+    "Position": positions,
+    "Goals": goals,
+    "Salary": salaries
+})
+
+df.to_csv("soccer_players.csv", index=False)
+
+df = pd.read_csv("soccer_players.csv")
+
+print("\n----- SOCCER PLAYER DATA -----")
+print(df)
+
+print("\n----- TOP 5 PLAYERS BY GOALS -----")
+print(df.nlargest(5, "Goals")[["Name", "Goals"]])
+
+print("\n----- TOP 5 PLAYERS BY SALARY -----")
+print(df.nlargest(5, "Salary")[["Name", "Salary"]])
+
+average_age = df["Age"].mean()
+
+print("\nAverage Age:", round(average_age, 2))
+
+print("\n----- PLAYERS ABOVE AVERAGE AGE -----")
+print(df[df["Age"] > average_age][["Name", "Age"]])
+
+position_count = df["Position"].value_counts()
+
+print("\n----- POSITION DISTRIBUTION -----")
+print(position_count)
+
+position_count.plot(kind="bar")
+
+plt.title("Distribution of Players Based on Position")
+plt.xlabel("Position")
+plt.ylabel("Number of Players")
+plt.show()
