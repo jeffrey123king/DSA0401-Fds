@@ -1,0 +1,36 @@
+import numpy as np
+from sklearn.neighbors import KNeighborsClassifier
+
+n = int(input("Enter number of training patients: "))
+
+X = []
+y = []
+
+for i in range(n):
+    print("\nPatient", i + 1)
+    fever = int(input("Fever (0/1): "))
+    cough = int(input("Cough (0/1): "))
+    fatigue = int(input("Fatigue (0/1): "))
+    result = int(input("Condition (0=No, 1=Yes): "))
+
+    X.append([fever, cough, fatigue])
+    y.append(result)
+
+k = int(input("\nEnter K value: "))
+
+model = KNeighborsClassifier(n_neighbors=k)
+model.fit(np.array(X), np.array(y))
+
+print("\nEnter new patient details")
+fever = int(input("Fever (0/1): "))
+cough = int(input("Cough (0/1): "))
+fatigue = int(input("Fatigue (0/1): "))
+
+prediction = model.predict([[fever, cough, fatigue]])
+
+print("\nPrediction:")
+
+if prediction[0] == 1:
+    print("Patient has the medical condition.")
+else:
+    print("Patient does not have the medical condition.")
