@@ -1,0 +1,18 @@
+from sklearn.linear_model import LogisticRegression
+
+n = int(input("Enter customers: "))
+X, y = [], []
+
+for i in range(n):
+    u = float(input("Usage minutes: "))
+    c = float(input("Contract duration: "))
+    ch = int(input("Churn (0/1): "))
+    X.append([u,c])
+    y.append(ch)
+
+model = LogisticRegression().fit(X,y)
+
+u = float(input("New usage: "))
+c = float(input("New contract: "))
+
+print("Churn Prediction:", model.predict([[u,c]])[0])
