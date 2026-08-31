@@ -1,0 +1,26 @@
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+
+n = int(input("Enter patients: "))
+X, y = [], []
+
+for i in range(n):
+    age = float(input("Age: "))
+    bp = float(input("BP: "))
+    chol = float(input("Cholesterol: "))
+    outcome = int(input("Outcome (0=Bad, 1=Good): "))
+    X.append([age, bp, chol])
+    y.append(outcome)
+
+k = int(input("Enter K: "))
+Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=.3, random_state=42)
+
+model = KNeighborsClassifier(k)
+model.fit(Xtr, ytr)
+p = model.predict(Xte)
+
+print("Accuracy:", accuracy_score(yte,p))
+print("Precision:", precision_score(yte,p,zero_division=0))
+print("Recall:", recall_score(yte,p,zero_division=0))
+print("F1 Score:", f1_score(yte,p,zero_division=0))
