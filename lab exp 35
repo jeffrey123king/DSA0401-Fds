@@ -1,0 +1,12 @@
+from sklearn.metrics import accuracy_score, precision_score
+from sklearn.metrics import recall_score, f1_score
+
+n = int(input("Enter samples: "))
+
+a = [int(input("Actual (0/1): ")) for i in range(n)]
+p = [int(input("Predicted (0/1): ")) for i in range(n)]
+
+print("Accuracy:", accuracy_score(a,p))
+print("Precision:", precision_score(a,p,zero_division=0))
+print("Recall:", recall_score(a,p,zero_division=0))
+print("F1 Score:", f1_score(a,p,zero_division=0))
