@@ -1,0 +1,19 @@
+from sklearn.linear_model import LinearRegression
+
+n = int(input("Enter houses: "))
+X, y = [], []
+
+for i in range(n):
+    area = float(input("Area: "))
+    bedrooms = float(input("Bedrooms: "))
+    price = float(input("Price: "))
+    X.append([area, bedrooms])
+    y.append(price)
+
+model = LinearRegression().fit(X,y)
+
+area = float(input("New area: "))
+bedrooms = float(input("New bedrooms: "))
+
+print("Predicted Price:", round(
+    model.predict([[area,bedrooms]])[0],2))
