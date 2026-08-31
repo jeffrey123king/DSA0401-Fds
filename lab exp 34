@@ -1,0 +1,21 @@
+from sklearn.linear_model import LinearRegression
+
+n = int(input("Enter cars: "))
+X, y = [], []
+
+for i in range(n):
+    e = float(input("Engine size: "))
+    h = float(input("Horsepower: "))
+    p = float(input("Price: "))
+    X.append([e,h])
+    y.append(p)
+
+model = LinearRegression().fit(X,y)
+
+print("R2 Score:", round(model.score(X,y),3))
+
+e = float(input("New engine size: "))
+h = float(input("New horsepower: "))
+
+print("Predicted Price:",
+      round(model.predict([[e,h]])[0],2))
