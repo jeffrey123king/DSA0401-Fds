@@ -1,0 +1,22 @@
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+
+n = int(input("Enter customers: "))
+X = []
+
+for i in range(n):
+    s = float(input("Amount spent: "))
+    items = int(input("Items purchased: "))
+    X.append([s,items])
+
+k = int(input("Enter clusters: "))
+
+labels = KMeans(n_clusters=k,random_state=42,n_init=10).fit_predict(X)
+
+print("Cluster Labels:",labels)
+
+plt.scatter([x[0] for x in X],[x[1] for x in X],c=labels)
+plt.xlabel("Amount Spent")
+plt.ylabel("Items Purchased")
+plt.title("Customer Segmentation")
+plt.show()
