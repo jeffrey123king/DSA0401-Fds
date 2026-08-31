@@ -1,0 +1,19 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+n = int(input("Enter houses: "))
+area = [float(input("Area: ")) for i in range(n)]
+price = [float(input("Price: ")) for i in range(n)]
+
+X = np.array(area).reshape(-1,1)
+model = LinearRegression().fit(X,price)
+
+print("R2 Score:", round(model.score(X,price),3))
+
+a = float(input("New area: "))
+print("Predicted Price:", round(model.predict([[a]])[0],2))
+
+plt.scatter(area,price)
+plt.plot(area,model.predict(X))
+plt.show()
