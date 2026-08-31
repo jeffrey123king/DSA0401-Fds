@@ -1,0 +1,18 @@
+from sklearn.cluster import KMeans
+
+n = int(input("Enter customers: "))
+X = []
+
+for i in range(n):
+    s = float(input("Spending: "))
+    v = float(input("Visits: "))
+    X.append([s,v])
+
+k = int(input("Enter clusters: "))
+
+model = KMeans(n_clusters=k,random_state=42,n_init=10).fit(X)
+
+s = float(input("New spending: "))
+v = float(input("New visits: "))
+
+print("Customer Cluster:", model.predict([[s,v]])[0])
